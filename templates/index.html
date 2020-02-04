@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <style>
+        .hidden {
+            display: none;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: gray;
+        }
+        li {
+            float: left;
+        }
+        li a {
+            font-family:Arial, Helvetica, sans-serif;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        li a:hover {
+            background-color: #1f77b4;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <title>Reports</title>
+    <script>
+        // set all but the selected graph (from navbar) to have className hidden
+        function process(name) {
+            document.getElementById('monthly').className = 'hidden';
+            document.getElementById('consumption').className = 'hidden';
+            document.getElementById('generation').className = 'hidden';
+            document.getElementById('yearly').className = 'hidden';
+            document.getElementById(name).className = '';
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div id=links>
+        <ul>
+            <li><a onclick="process('yearly')">Yearly wind coverage</a></li>
+            <li><a onclick="process('monthly')">Monthly wind coverage</a></li>
+            <li><a onclick="process('consumption')">Electricity consumption</a></li>
+            <li><a onclick="process('generation')">Wind generation</a></li>
+        </ul> 
+    </div>
+    <div id="graphs">
+        <div id="monthly">
+            <script>
+                var graphs1 = {{monthly | safe}};
+                Plotly.plot('monthly',graphs1,{});
+            </script>
+        </div>
+        <div id="consumption">
+            <script>
+                var graphs2 = {{consumption | safe}};
+                Plotly.plot('consumption',graphs2,{});
+            </script>
+        </div>
+        <div id="generation">
+            <script>
+                var graphs3 = {{generation | safe}};
+                Plotly.plot('generation',graphs3,{});
+            </script>
+        </div>
+        <div id="yearly">
+            <script>
+                var graphs4 = {{yearly | safe}};
+                Plotly.plot('yearly',graphs4,{});
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
